@@ -1,16 +1,8 @@
-import { gql, useMutation } from "@apollo/client"
 import { FormEvent, useState } from "react"
 import { useNavigate } from "react-router-dom"
+import { useCreateSubscriberMutation } from "../graphql/generated"
 
 import { IgniteIcon } from "../assets/svg"
-
-const CREATE_SUBSCRIBER_MUTATION = gql`
-  mutation CreateSubscriber($name: String!, $email: String!) {
-    createSubscriber(data: { name: $name, email: $email }) {
-      id
-    }
-  }
-`
 
 export function Subscribe() {
   const navigate = useNavigate()
@@ -18,9 +10,7 @@ export function Subscribe() {
   const [name, setName] = useState("")
   const [email, setEmail] = useState("")
 
-  const [createSubscriber, { loading }] = useMutation(
-    CREATE_SUBSCRIBER_MUTATION
-  )
+  const [createSubscriber, { loading }] = useCreateSubscriberMutation()
 
   const handleSubscribe = async (e: FormEvent) => {
     e.preventDefault()
@@ -34,16 +24,17 @@ export function Subscribe() {
   }
 
   return (
-    <div className="min-h-screen bg-blur bg-cover bg-no-repeat flex flex-col items-center">
-      <div className="w-full max-w-[1100px] flex items-center justify-between mt-20 mx-auto">
+    <div className="flex flex-col items-center min-h-screen px-[10vw] bg-blur bg-cover bg-no-repeat">
+      <div className="flex flex-col gap-8 items-center justify-between w-full mt-20 lg:flex-row ">
         <div className="max-w-[640px]">
           {IgniteIcon}
-          <h1 className="mt-8 text-[2.5rem] leading-tight">
-            Construa uma{" "}
-            <strong className="text-blue-500">aplicação completa</strong>, do
-            zero, com <strong className="text-blue-500">React</strong>
+          <h1 className="mt-8 text-[2.5rem] text-center leading-tight lg:text-left">
+            <span>Construa uma</span>
+            <strong className="text-blue-500"> aplicação completa</strong>
+            <span>, do zero, com </span>
+            <strong className="text-blue-500">React</strong>
           </h1>
-          <p className="mt-4 text-gray-200 leading-relaxed">
+          <p className="mt-4 text-center text-gray-200 leading-relaxed lg:text-left">
             Em apenas uma semana você vai dominar na prática uma das tecnologias
             mais utilizadas e com alta demanda para acessar as melhores
             oportunidades do mercado.
@@ -61,7 +52,7 @@ export function Subscribe() {
             <input
               className="bg-gray-900 rounded px-5 h-14"
               type="text"
-              placeholder="Seu nome comepleto"
+              placeholder="Seu nome completo"
               onChange={(e) => setName(e.target.value)}
             />
             <input

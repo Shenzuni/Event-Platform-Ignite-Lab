@@ -1,68 +1,43 @@
-import { gql, useQuery } from "@apollo/client"
-
+import { useState } from "react"
 import { useParams } from "react-router-dom"
+import { useGetLessonBySlugQuery } from "../graphql/generated"
 
-import { Description } from "../components/Description"
 import { Header } from "../components/Header"
 import { Sidebar } from "../components/Sidebar"
 import { Video } from "../components/Video"
-
-const GET_LESSON_BY_SLUG_QUERY = gql`
-  query GetLessonBySlug($slug: String) {
-    lesson(where: { slug: $slug }) {
-      title
-      description
-      videoId
-      teacher {
-        bio
-        name
-        avatarURL
-      }
-    }
-  }
-`
-
-interface GetLessonBySlugResponse {
-  lesson: {
-    title: string
-    description?: string
-    videoId: string
-    teacher?: {
-      bio: string
-      name: string
-      avatarURL: string
-    }
-  }
-}
+import { Description } from "../components/Description"
 
 export function Event() {
+  const [showSidebar, setShowSidebar] = useState(false)
+
   const { slug } = useParams<{ slug: string }>()
 
-  let { data } = useQuery<GetLessonBySlugResponse>(GET_LESSON_BY_SLUG_QUERY, {
+  const { data } = useGetLessonBySlugQuery({
     variables: { slug },
   })
 
-  const { lesson } = data || {}
+  const { lesson } = data ?? {}
+
   return (
-    <div className="flex flex-col min-h-screen max-h-screen">
-      <Header />
+    <div className="flex flex-col min-h-screen">
+      <Header setShowSidebar={setShowSidebar} />
       <main className="flex">
-        {lesson?.videoId ? (
-          <Video videoId={lesson?.videoId} />
+        {lesson ? (
+          <Video videoId={lesson.videoId} />
         ) : (
-          <div className="flex-1" />
+          <div className="flex-1"></div>
         )}
-        <Sidebar />
+        <Sidebar showSidebar={showSidebar} />
       </main>
-      <div>
-        {lesson?.title && (
-          <Description
-            title={lesson.title}
-            description={lesson?.description}
-            teacher={lesson?.teacher}
-          />
-        )}
-      </div>
+      {lesson ? (
+        <Description
+          title={lesson.title}
+          description={lesson?.description}
+          teacher={lesson?.teacher}
+        />
+      ) : (
+        <div></div>
+      )}
     </div>
   )
 }

@@ -2,23 +2,24 @@ import {
   CaretRight,
   DiscordLogo,
   FileArrowDown,
+  Image,
   Lightning,
 } from "phosphor-react"
 
 interface DescriptionProps {
   title: string
-  description?: string
+  description?: string | null
   teacher?: {
     name: string
     avatarURL: string
     bio: string
-  }
+  } | null
 }
 
 export function Description({ title, description, teacher }: DescriptionProps) {
   return (
-    <div className="p-8 mx-auto">
-      <div className="flex items-start gap-16 ">
+    <div className="p-8">
+      <div className="flex flex-col lg:flex-row gap-16 ">
         <div className="flex-1">
           <h1 className="text-2xl font-bold">{title}</h1>
           <p className="mt-4 text-gray-200 leading-relaxed">{description}</p>
@@ -39,17 +40,17 @@ export function Description({ title, description, teacher }: DescriptionProps) {
           </div>
         </div>
 
-        <div className="w-[350px] flex flex-col gap-4">
+        <div className="flex flex-col gap-4 lg:w-[350px]">
           <a
             href="#"
-            className="p-4 text-sm bg-green-500 flex items-center rounded font-bold uppercase gap-2 justify-center hover:bg-green-700 transition-colors"
+            className="flex items-center justify-center p-4 text-sm bg-green-500 rounded font-bold uppercase gap-2 hover:bg-green-700 transition-colors"
           >
             <DiscordLogo size={24} />
             Comunidade do Discord
           </a>
           <a
             href="#"
-            className="p-4 text-sm flex items-center rounded border border-blue-500 text-blue-500 font-bold uppercase gap-2 justify-center hover:bg-blue-500 hover:text-gray-900 transition-colors"
+            className="flex items-center justify-center p-4 text-sm rounded border border-blue-500 text-blue-500 font-bold uppercase gap-2 hover:bg-blue-500 hover:text-gray-900 transition-colors"
           >
             <Lightning size={24} />
             Acesse o desafio
@@ -57,39 +58,44 @@ export function Description({ title, description, teacher }: DescriptionProps) {
           <a href="#"></a>
         </div>
       </div>
-      <div className="gap-8 mt-20 grid grid-cols-2 w-[1000px] max-w-full">
+      <div className="flex flex-col lg:flex-row gap-8 mt-20">
         <a
-          className="max-w-[500px] bg-gray-700 rounded overflow-hidden flex items-strech gap-6 hover:bg-gray-600 transition-colors"
+          className="flex items-stretch justify-between gap-4 bg-gray-700 hover:bg-gray-600 rounded transition-colors"
           href=""
         >
-          <div className="bg-green-700 h-full p-6 flex items-center">
-            <FileArrowDown size={40} />
+          <div className="flex gap-4">
+            <div className="flex items-center basis-9 px-6 bg-green-700">
+              <FileArrowDown size={40} />
+            </div>
+            <div className="leading-relaxed py-4">
+              <strong className="text-xl">Material complementar</strong>
+              <p className="text-sm text-gray-200 mt-2">
+                Acesse o material complementar para acelerar o seu
+                desenvolvimento
+              </p>
+            </div>
           </div>
-          <div className="py-6 leading-relaxed">
-            <strong className="text-2xl">Material complementar</strong>
-            <p className="text-sm text-gray-200 mt-2">
-              Acesse o material complementar para acelerar o seu desenvolvimento
-            </p>
-          </div>
-          <div className="h-full p-6 flex items-center text-blue-500">
+          <div className="flex items-center pr-4 text-blue-500">
             <CaretRight size={24} />
           </div>
         </a>
         <a
-          className="max-w-[500px] bg-gray-700 rounded overflow-hidden flex items-strech gap-6 hover:bg-gray-600 transition-colors"
+          className="flex items-stretch justify-between gap-4 bg-gray-700 hover:bg-gray-600 rounded transition-colors"
           href=""
         >
-          <div className="bg-green-700 h-full p-6 flex items-center">
-            <FileArrowDown size={40} />
+          <div className="flex gap-4">
+            <div className="flex items-center basis-9 px-6 bg-green-700">
+              <Image size={40} />
+            </div>
+            <div className="leading-relaxed py-4">
+              <strong className="text-xl">Wallpapers exclusivos</strong>
+              <p className="text-sm text-gray-200 mt-2">
+                Baixe wallpapers exclusivos do Ignite Lab e personalize a sua
+                máquina
+              </p>
+            </div>
           </div>
-          <div className="py-6 leading-relaxed">
-            <strong className="text-2xl">Wallpapers exclusivos</strong>
-            <p className="text-sm text-gray-200 mt-2">
-              Baixe wallpapers exclusivos do Ignite Lab e personalize a sua
-              máquina
-            </p>
-          </div>
-          <div className="h-full p-6 flex items-center text-blue-500">
+          <div className="flex items-center pr-4 text-blue-500">
             <CaretRight size={24} />
           </div>
         </a>
